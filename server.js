@@ -1,15 +1,15 @@
 //set up variable for modules
-const http = required('http');
-fs = require('fs');
-url = require('url');
+const http = require('http');
+const fs = require('fs');
+const url = require('url');
 
 //create server 
     http.createServer((request, response) => {
-        let addr = request.url,
-        q = new URL(addr,true),
-        filePath = '';
+        const addr = request.url;
+        const q = url.parse(addr,true);
+        let filePath = '';
 //File where new info is appended 
-    fs.appendFile('log.txt', 'URL: ', +addr+ '\nTimestamp: ' + newDate() + '\n\n', (err) => {
+    fs.appendFile('log.txt', `URL: ${addr}\nTimestamp:  ${newDate()}\n\n`, (err) => {
         if (err) {
         console.log(err);
         } else {
@@ -18,7 +18,7 @@ url = require('url');
     });
 //  
     if (q.pathname.includes('documentation')){
-        filePath = (_movie_api + '/documentation.html')
+        filePath = (`${_movie_api}/documentation.html`)
     } else {
         filePath = 'index.html';
     }
@@ -26,9 +26,8 @@ url = require('url');
     fs.readFile(fielPath, (err,data) => {
         if (err){
             throw error;
-            }
-    
-        response.writeHead(200, {'Content-Type': 'text/plain'});
+            }    
+        response.writeHead(200, {'Content-Type': 'text/html'});
         response.write(data);
         response.end();
         });
