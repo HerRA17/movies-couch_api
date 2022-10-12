@@ -18,12 +18,12 @@ const url = require('url');
     });
 //  
     if (q.pathname.includes('documentation')){
-        filePath = (`${_movie_api}/documentation.html`)
+        filePath = (`${_dirname}/documentation.html`)
     } else {
         filePath = 'index.html';
     }
 //error handling
-    fs.readFile(fielPath, (err,data) => {
+    fs.readFile(filePath, (err,data) => {
         if (err){
             throw error;
             }    
