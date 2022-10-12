@@ -16,7 +16,7 @@ const url = require('url');
             console.log('Added to log.')
         }
     });
-//  
+//conditional to find either html file   
     if (q.pathname.includes('documentation')){
         filePath = (`${_dirname}/documentation.html`)
     } else {
