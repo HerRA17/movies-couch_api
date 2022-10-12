@@ -18,7 +18,7 @@ const url = require('url');
     });
 //conditional to find either html file   
     if (q.pathname.includes('documentation')){
-        filePath = (`${_dirname}/documentation.html`)
+        filePath = (`${__dirname}/documentation.html`)
     } else {
         filePath = 'index.html';
     }
