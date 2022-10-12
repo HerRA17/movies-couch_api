@@ -25,7 +25,7 @@ const url = require('url');
 //error handling
     fs.readFile(filePath, (err,data) => {
         if (err){
-            throw error;
+            throw err;
             }    
         response.writeHead(200, {'Content-Type': 'text/html'});
         response.write(data);
