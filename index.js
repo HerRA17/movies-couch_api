@@ -1,7 +1,14 @@
+//importing express & morgan
 const express = require('express');
 const morgan = require('morgan');
 
 const app = express();
+
+// let myLogger = (req, res, next) => {
+//     console.log(req.url);
+//     next();
+// };
+// app.use(myLogger);
 
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
@@ -56,8 +63,8 @@ let topMovies = [{
     {
         title:'Avengers: Infinity War',
         director:'Anthony Russo, Joe Russo',
-        genre:'action, science fiction, super heroe movie'}
-];
+        genre:'action, science fiction, super heroe movie'
+    }];
 //get request
 app.get('/', (req, res) => {
     res.send('Welcome to Movies-couch!');
@@ -70,7 +77,8 @@ app.get('/documentation', (req, res) => {
 app.get('/movies', (req, res) => {
     res.json(topMovies);
 });
-//app.use(express.static('public));
+
+app.use(express.static('public'));
 //error handling
 app.use(bodyParser.urlencoded({
     extended:true
