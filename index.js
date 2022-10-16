@@ -1,19 +1,11 @@
 //importing express & morgan
 const express = require('express');
 const morgan = require('morgan');
-
-const app = express();
-
-// let myLogger = (req, res, next) => {
-//     console.log(req.url);
-//     next();
-// };
-// app.use(myLogger);
-
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
-
+const app = express();
 app.use(morgan('common'));
+app.use(bodyParser.json());
+
 
 let topMovies = [{
         title:'The Lord of the Rings: The Fellowship of the Ring',
@@ -84,8 +76,6 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
-app.use(bodyParser.json());
-app.use(methodOverride());
 
 app.use((err, req, res, next) =>{
 console.error(err.stack);
