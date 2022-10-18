@@ -9,55 +9,76 @@ app.use(bodyParser.json());
 
 let topMovies = [{
         title:'The Lord of the Rings: The Fellowship of the Ring',
-        director:'Peter Jackson',
-        genre:'adventure, epic fantasy'
+        data:{
+            director:'Peter Jackson',
+            genre:'adventure, epic fantasy'   
+        }
     },
     {
         title:'The Lord of the Rings: The Two Towers',
-        director:'Peter Jackson',
-        genre:'adventure, epic fantasy'
+        data:{
+            director:'Peter Jackson',
+            genre:'adventure, epic fantasy'    
+        }
+        
     },
     {
         title:'The Lord of the Rings: The Return of the King',
-        director:'Peter Jackson',
-        genre:'adventure, epic fantasy'
+        data:{
+            director:'Peter Jackson',
+            genre:'adventure, epic fantasy'    
+        }
     },
     {
         title:'Star Wars: Episode IV- A New Hope',
-        director:'George Lucas',
-        genre:'space opera, science fiction'
+        data:{
+            director:'George Lucas',
+            genre:'space opera, science fiction'    
+        }
     },
     {
         title:'Star Wars: Episode V- The Empire Strikes Back',
-        director:'Irvin Keshner',
-        genre:'space opera, science fiction'
+        data:{
+            director:'Irvin Keshner',
+            genre:'space opera, science fiction'    
+        }
     },
     {
         title:'Star Wars: Episode VI- Return of the Jedi',
-        director:'Richard Marquand',
-        genre:'space opera, science fiction'
+        data: {
+            director:'Richard Marquand',
+            genre:'space opera, science fiction'
+        }
     },
     {
         title:'Star Wars: Episode I- The Phantom Menace',
-        director:'George Lucas',
-        genre:'space opera, science fiction'
+        data:{
+            director:'George Lucas',
+            genre:'space opera, science fiction' 
+        }
     },
     {
         title:'Star Wars: Episode II- Attack of The Clones',
-        director:'George Lucas',
-        genre:'space opera, science fiction'
+        data:{
+            director:'George Lucas',
+            genre:'space opera, science fiction'    
+        }
     },
     {
         title:'Star Wars: Episode III- Revenge of The Sith',
-        director:'George Lucas',
-        genre:'space opera, science fiction'
+        data:{
+            director:'George Lucas',
+            genre:'space opera, science fiction'    
+        }
     },
     {
         title:'Avengers: Infinity War',
-        director:'Anthony Russo, Joe Russo',
-        genre:'action, science fiction, super heroe movie'
+        data:{
+            director:'Anthony Russo, Joe Russo',
+            genre:'action, science fiction, super heroe movie'    
+        }
     }];
-//get request
+// get requests
 app.get('/', (req, res) => {
     res.send('Welcome to Movies-couch!');
 });
@@ -65,12 +86,60 @@ app.get('/', (req, res) => {
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentation.html', {root:__dirname});
 });
-
+// get top Movies
 app.get('/movies', (req, res) => {
     res.json(topMovies);
 });
+// get a top movie by its title
+app.get('/movies/:title', (req, res) => {
+    res.send('Succesful GET request returning data of movie by title.');
+    // res.json(topMovies.find((title) =>
+    // { return topMovies.data.title === req.params.title }));
+});
+
+// get a top movie by the genre
+app.get('/movies/data/:genre', (req, res) => {
+    res.send('Succesful GET request returning data of movie by genre.');
+    // res.json(topMovies.data.find((director) =>
+    // { return topMovies.data.director === req.params.director }));
+});
+
+// get a top movie by the director
+app.get('/movies/data/:director', (req, res) => {
+    res.send('Succesful GET request returning data of movie by director.');
+    // res.json(topMovies.data.find((director) =>
+    // { return topMovies.data.director === req.params.director }));
+});
+
+// get access to data about the movie
+app.get('/movies/:data', (req, res) => {
+    res.send('Succesful GET request returning data on movie by title.');
+    // res.json(topMovies.find((data) => 
+    // { return topMovies.data === res.params.data }));
+});
 
 app.use(express.static('public'));
+
+// add a new user
+app.post('/user', (req, res) => {
+    res.send('Succesful POST request creating a user.')
+    // let newUser = req.body;
+    // if (!newUser.name) {
+    // }
+});
+// update user
+app.put('/user/:', (req, res) => {
+res.send('Succesful PUT request updating user information.');
+});
+// deregistration of user (need to ask which method applies)
+app.put('/user', (req, res) => {
+    res.send('Succesful DELETE/PUT request updating user deregistration.');
+})
+// delete user 
+app.delete('/user/:delete', (req, res) => {
+res.send('Succesful DELETE request removing the user.')
+});
+
 //error handling
 app.use(bodyParser.urlencoded({
     extended:true
