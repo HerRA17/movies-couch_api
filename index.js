@@ -134,7 +134,7 @@ res.send('Succesful PUT request updating user information.');
 // deregistration of user (need to ask which method applies)
 app.put('/user', (req, res) => {
     res.send('Succesful DELETE/PUT request updating user deregistration.');
-})
+});
 // delete user 
 app.delete('/user/:delete', (req, res) => {
 res.send('Succesful DELETE request removing the user.')
