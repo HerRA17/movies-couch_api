@@ -125,7 +125,7 @@ app.get('/movies/:title', (req, res) => {
     }
     const movie = movies.find(movie => movie.Title === title);
      if (!movie) {
-        res.status(404).send('Not such movie');    
+        res.status(404).send('Movie not found');    
     } else {
         res.status(200).json(movie);
     }
@@ -153,7 +153,7 @@ app.get('/movies/:genre/', (req, res) => {
 });
 
 // get a top movie by the director
-app.get('/movies/:director/', (req, res) => {
+app.get('/movies/:director/director/', (req, res) => {
     const director  = req.params.director;
     if (!director) {
         res.status(400).send('You must provide a director');
