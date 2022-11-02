@@ -165,13 +165,10 @@ app.get('/movies/:director/', (req, res) => {
     res.status(200).json(director);
 });
 
-// get access to data about the movie
-app.get('/movies/:data', (req, res) => {
-    res.json(movies.find((data) => 
-    { return movies.data === res.params.data }));
+// get users
+app.get('/users', (req, res) => {
+    res.json(users);
 });
-
-
 // add a new user
 app.post('/users', (req, res) => {
     const { id } = req.params;
@@ -224,10 +221,10 @@ app.delete('/users/:id/:title', (req, res) => {
    });
 
 // deregistration of user (need to ask which method applies)
-app.put('/user', (req, res) => {
-    res.send('Succesful deregistered of email from list.');
+// app.put('/user', (req, res) => {
+//     res.send('Succesful deregistered of email from list.');
     
-});
+// });
 
 // delete user 
 app.delete('/user/:id', (req, res) => {
