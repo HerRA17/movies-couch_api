@@ -5,6 +5,11 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
+
 let users = [
     {
         id: 1,
@@ -14,76 +19,87 @@ let users = [
 
 ];
 
-let topMovies = [{
+let movies = [{
         'Title':'The Lord of the Rings: The Fellowship of the Ring',
-        'Data':{
-            'Director':'Peter Jackson',
-            'genre':'adventure, epic fantasy'   
-        }
+        'Director':'Peter Jackson',
+        'Genre':[
+            'adventure',
+            'epic fantasy'
+        ]    
     },
     {
         'Title':'The Lord of the Rings: The Two Towers',
-        'Data':{
-            'Director':'Peter Jackson',
-            'Genre':'adventure, epic fantasy'    
-        }
-        
+        'Director':'Peter Jackson',
+        'Genre':[
+                'adventure',
+                'epic fantasy'
+            ]    
     },
     {
         'Title':'The Lord of the Rings: The Return of the King',
-        'Data':{
-            'Director':'Peter Jackson',
-            'Genre':'adventure, epic fantasy'    
-        }
+        'Director':'Peter Jackson',
+        'Genre': [
+                'adventure',
+                'epic fantasy'
+            ]    
     },
     {
         'Title':'Star Wars: Episode IV- A New Hope',
-        'Data':{
-            'Director':'George Lucas',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'George Lucas',
+        'Genre':[
+                'space opera', 
+                'science fiction'    
+            ]
     },
     {
         'Title':'Star Wars: Episode V- The Empire Strikes Back',
-        'data':{
-            'Director':'Irvin Keshner',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'Irvin Keshner',
+        'Genre':[
+                'space opera', 
+                'science fiction'    
+            ]
     },
     {
         'Title':'Star Wars: Episode VI- Return of the Jedi',
-        'data':{
-            'Director':'Irvin Keshner',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'Irvin Keshner',
+        'Genre':[
+            'space opera', 
+            'science fiction'    
+        ]
     },
     {
         'Title':'Star Wars: Episode I- The Phantom Menace',
-        'data':{
-            'Director':'George Lucas',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'George Lucas',
+        'Genre':[
+                'space opera', 
+                'science fiction'    
+            ]    
     },
     {
         'Title':'Star Wars: Episode II- Attack of The Clones',
-        'data':{
-            'Director':'George Lucas',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'George Lucas',
+        'Genre':[
+                'space opera', 
+                'science fiction'    
+            ]
     },
     {
         'Title':'Star Wars: Episode III- Revenge of The Sith',
-        'data':{
-            'Director':'George Lucas',
-            'Genre':'space opera, science fiction'    
-        }
+        'Director':'George Lucas',
+        'Genre':[
+            'space opera', 
+            'science fiction'    
+        ]
     },
     {
         'Title':'Avengers: Infinity War',
-        'Data':{
-            'Director':'Anthony Russo, Joe Russo',
-            'Genre':'action, science fiction, super heroe movie'    
-        }
+        'Director':'Anthony Russo, Joe Russo',
+        'Genre':[
+            'action',
+            'science fiction',
+            'super heroe movie'
+        ]    
+        
     }];
 
 // get requests
@@ -97,65 +113,67 @@ app.get('/documentation', (req, res) => {
 
 // get top Movies
 app.get('/movies', (req, res) => {
-    res.json(topMovies);
+    res.json(movies);
     //res.status(200).json(movies);
 });
 
 // get a top movie by its title
 app.get('/movies/:title', (req, res) => {
-    // res.send('Succesful GET request returning data of movie by title.');
-    const { title } = req.params;
-    const movies = movies.find(movie => movie.Title === title);
-     if (movies) {
-        res.status(200).json(movies);
+    const title  = req.params.title;
+    if (!title) {
+        res.status(404).send('You must provide a title');
+    }
+    const movie = movies.find(movie => movie.Title === title);
+     if (!movie) {
+        res.status(404).send('Not such movie');    
     } else {
-        res.status(404).send('Not such movie')
+        res.status(200).json(movie);
     }
       
-    res.json(topMovies.find((title) =>
-    { return topMovies.data.title === req.params.title })); 
+    res.json(movies.find((title) =>
+    { return movies.data.title === req.params.title })); 
 });
 
 // get a top movie by the genre
-app.get('/movies/:data/:genre', (req, res) => {
-    // res.send('Succesful GET request returning data of movie by genre.');
-    const { genre } = req.params;
-     genre = movies.find(movie => movie.Genre === genre);
-    if (genre) {
-        res.status(200).json(genre);
-    } else {
-        res.status(404).send('Not such genre')
+app.get('/movies/:genre/', (req, res) => {
+    const genre = req.params.genre;
+    if (!genre) {
+        res.status(404).send('You must provide a genre');
     }
-    res.json(topMovies.data.find((director) =>
-     { return topMovies.data.director === req.params.director })); 
+    if (genre) {
+        const movie = movies.filter((movie) => {
+        return  (movies.genre.find((genre) => genre === genre))
+        });
+            
+    if (!movie) {
+        res.status(404).send('Movie not found')
+    }
+     res.status(200).json(movie);
+    }
 });
 
 // get a top movie by the director
-app.get('/movies/data/:director', (req, res) => {
-    // res.send('Succesful GET request returning data of movie by director.');
-    const { director } = req.params;
-     director = movies.find(movie => movie.director === director);
-    if (genre) {
-        res.status(200).json(director);
-    } else {
-        res.status(404).send('Not found the Director name')
-    } 
-    res.json(topMovies.data.find((director) =>
-     { return topMovies.data.director === req.params.director })); 
+app.get('/movies/:director/', (req, res) => {
+    const director  = req.params.director;
+    if (!director) {
+        res.status(400).send('You must provide a director');
+    }
+    const movie = movies.filter((movie) => movie.Director === director); 
+    if (movie) {
+        res.status(404).send('Movie not found');
+    }
+    res.status(200).json(director);
 });
 
 // get access to data about the movie
 app.get('/movies/:data', (req, res) => {
-    // res.send('Succesful GET request returning data on movie by title.');
-    res.json(topMovies.find((data) => 
-    { return topMovies.data === res.params.data }));
+    res.json(movies.find((data) => 
+    { return movies.data === res.params.data }));
 });
 
-app.use(express.static('public'));
 
 // add a new user
 app.post('/users', (req, res) => {
-    // res.send('Succesful POST request creating a user.')
     const { id } = req.params;
     const updatedUser = req.body;
      let user = users.find(user => user.id == id); 
@@ -169,7 +187,6 @@ app.post('/users', (req, res) => {
 
 // update user
 app.put('/user/:id', (req, res) => {
-// res.send('Succesful PUT request updating user information.');
     const newUser = req.body;
      if (newUser.name) {
      newUser.id = uuid.v4;
@@ -182,7 +199,6 @@ app.put('/user/:id', (req, res) => {
 
 //adding to users favorite movies
 app.post('/users/:id/:title', (req, res) => {
-    // res.send('Succesful POST request creating a user.')
     const { id, title } = req.params;
     let user = users.find(user => user.id == id); 
     if (user) {
@@ -196,7 +212,6 @@ app.post('/users/:id/:title', (req, res) => {
 
 //deleting a movie from Favorite list
 app.delete('/users/:id/:title', (req, res) => {
-    // res.send('Succesful POST request creating a user.')
     const { id, title } = req.params;
      let user = users.find(user => user.id == id); 
     if (user) {
@@ -228,11 +243,6 @@ app.delete('/user/:id', (req, res) => {
 });
 
 //error handling
-app.use(bodyParser.urlencoded({
-    extended:true
-}));
-
-
 app.use((err, req, res, next) =>{
 console.error(err.stack);
 res.status(500).send('Something broke!')
