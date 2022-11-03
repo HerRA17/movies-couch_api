@@ -178,7 +178,7 @@ app.get('/users', (req, res) => {
 });
 // add a new user
 app.post('/users', (req, res) => {
-    const newSser = req.params;
+    const newUser = req.params;
     if (newUser.name) {
      newUser.id = uuid.v4();
      users.push(newUser);
@@ -190,13 +190,14 @@ app.post('/users', (req, res) => {
 
 // update user
 app.put('/user/:id', (req, res) => {
-    const newUser = req.body;
-     if (newUser.name) {
-     newUser.id = uuid.v4;
-     users.push(newUser);
-     res.status(201).json(newUser);
+    const {id} = req.params;
+    const updatedUser = req.body;
+    let user = user.find( user => user.id === id);
+     if (user) {
+     user.name = updatedUser.name; 
+     res.status(200).json(newUser);
     } else {
-    res.status(400).send('users needs names!') 
+    res.status(400).send('No such users!') 
     }
 });
 
