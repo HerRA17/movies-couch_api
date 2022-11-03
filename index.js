@@ -189,7 +189,7 @@ app.post('/users', (req, res) => {
 });
 
 // update user
-app.put('/user/:id', (req, res) => {
+app.put('/users/:id', (req, res) => {
     const {id} = req.params;
     const updatedUser = req.body;
     let user = user.find( user => user.id === id);
