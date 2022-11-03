@@ -202,7 +202,7 @@ app.put('/users/:id', (req, res) => {
 });
 
 //adding to users favorite movies
-app.post('/users/:id/:favoriteMovies', (req, res) => {
+app.post('/users/:id/:title', (req, res) => {
     const { id, title } = req.params;
     let user = users.find(user => user.id == id); 
     if (user) {
@@ -215,7 +215,7 @@ app.post('/users/:id/:favoriteMovies', (req, res) => {
    });
 
 //deleting a movie from Favorite list
-app.delete('/users/:id/:favoriteMovies', (req, res) => {
+app.delete('/users/:id/:title', (req, res) => {
     const { id, title } = req.params;
      let user = users.find(user => user.id == id); 
     if (user) {
@@ -226,6 +226,19 @@ app.delete('/users/:id/:favoriteMovies', (req, res) => {
     }
     
    });
+
+   // delete user 
+app.delete('/user/:id', (req, res) => {
+        const { id } = req.params;
+         let user = users.find(user => user.id == id); 
+        if (user) {
+         users = users.filter(user => user.id != user.id);
+         res.status(200).send(`user ${id} has been deleted`);
+        } else {
+        res.status(400).send('no such user')    
+        }
+    });
+
 /* --Mongoose GET-all users
 app.get('/users', (req,res) => {
     Users.find().then((users) => {
@@ -322,18 +335,7 @@ app.delete('/users/:Username/movies/:MovieID', (req,res) => {
 });
 */
 
-// delete user 
-app.delete('/user/:Userid', (req, res) => {
-// res.send('Succesful DELETE request removing the user.')
-    const { id } = req.params;
-     let user = users.find(user => user.id == id); 
-    if (user) {
-     users = users.filter(user => user.id != user.id);
-     res.status(200).send(`user ${id} has been deleted`);
-    } else {
-    res.status(400).send('no such user')    
-    }
-});
+
 
 //error handling
 app.use((err, req, res, next) =>{
