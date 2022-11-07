@@ -21,7 +21,7 @@ let users = [
     {
         id: 1,
         name: 'Gustavo Fring',
-        favoriteMovies:'The Lord of the Rings: The Return of the King'
+        favoriteMovies:['The Lord of the Rings: The Return of the King']
     },
 
 ];
@@ -168,7 +168,18 @@ app.get("/movies/director/:director/", (req, res) => {
     }
   });
 
-
+//get user
+app.get('/user/:id', (req, res) => {
+  const {id} = req.params
+  if (!id) {
+      res.status(404).send('You must provide a user ID');
+  }
+  const user = users.find(user => user.id == id);
+      if (!user) {
+      res.status(404).send('User not found');
+  }
+  res.status(200).json(user);
+});
 // add a new user
 app.post("/users", (req, res) => {
     const { name } = req.body;
