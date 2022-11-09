@@ -5,15 +5,15 @@ uuid = require('uuid');
 const morgan = require('morgan');
 const app = express();
 const mongoose = require('mongoose');
-const Models = require('./models.js');
+const Models = require('models.js');
 const Movies = Models.Movie;
 const Users = Models.Sser;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost:27017/movies' , {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect('mongodb://localhost:27017/users' , {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true
