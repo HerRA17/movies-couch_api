@@ -11,7 +11,7 @@ const Users = Models.User;
 // const Genres = Models.Genre;
 // const Directors = Models.Director; 
 
-mongoose.connect('mongodb://localhost:127.0.0.1:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://127.0.0.1:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'));
