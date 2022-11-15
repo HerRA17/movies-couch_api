@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 uuid = require('uuid');
 const morgan = require('morgan');
-const app = express();
 const mongoose = require('mongoose');
 // const {Movie, User} = require('./models.js');
 const Models = require('./models.js');
@@ -11,11 +10,11 @@ const Movies = Models.Movie;
 const Users = Models.User;
 // const Genres = Models.Genre;
 // const Directors = Models.Director; 
-app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
-
+mongoose.connect('mongodb://localhost:127.0.0.1:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
+const app = express();
 app.use(bodyParser.json());
+app.use(express.static('public'));
 app.use(morgan('common'));
 app.use(bodyParser.urlencoded({
     extended:true
