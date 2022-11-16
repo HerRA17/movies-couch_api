@@ -51,7 +51,7 @@ app.get("/movies", /* passport.authenticate('jwt', {session: false}), */
 
 // get JSON movie info when looking for specific title
 app.get("/movies/:title", (req, res) => {
-    Movies.findOne({Title:  req.params.title})
+  Movies.findOne({Title:  req.params.title})
     .then((movie) => {
       res.json(movie);
     })
@@ -63,7 +63,7 @@ app.get("/movies/:title", (req, res) => {
 
 // genre JSON genre info when looking for specific genre
 app.get("/movies/genre/:genre", (req, res) => {
-    Movies.findOne({"Genre.Name": req.params.name})
+  Movies.findOne({"Genre.Name": req.params.name}) //Genre or Genre.Name?
     .then((genre) => {
       res.json(genre.Description);
     }) 
@@ -75,7 +75,7 @@ app.get("/movies/genre/:genre", (req, res) => {
 
 // get info on Director when looking for specific Director
 app.get("/movies/director/:director/", (req, res) => {
-    Movies.findOne({"Director.Name": req.params.name })
+  Movies.findOne({"Director.Name": req.params.name }) //Director or Director.Name?
     .then((director) => {
       res.json(director);
     })
@@ -141,16 +141,17 @@ app.post("/users", (req,res) => {
             Email: req.body.Email,
             Birthday: req.body.Birthday
         })
-        .then((user) => {
-          res.status(201).json(user)
-         })
-        .catch((err) => {
-            comnsole.error(err);
-            res.status(500).send("Error: "+ err);
+        .then((user) => {res.status(201).json(user) })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error: "+ error);
             })
         }  
     })
-    .catch((error))
+    .catch((error) => {
+      console.error(error);
+            res.status(500).send("Error: "+ error);
+    })
 });
 
 // --POST a movie to user Favorite Movies
