@@ -1,5 +1,5 @@
 const {default:mongoose} = require('mongoose');
-let movieSchema = mongoose.Schema({
+let moviesSchema = mongoose.Schema({
     Title: {type: String, require: true},
     Description: {type: String, require:true},
     Genre: {
@@ -16,15 +16,15 @@ let movieSchema = mongoose.Schema({
     ImagePath: String,
     Feature: Boolean
 });
-let userSchema = mongoose.Schema({
+let usersSchema = mongoose.Schema({
     Username: {type:String, required:true},
     Password: {type:String, require:true},
     Email: {type:String, require:true},
     Birthday: Date,
     FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref:'Movie'}]
 });
-let Movie = mongoose.model('Movie', movieSchema);
-let User = mongoose.model('User', userSchema);
+let Movie = mongoose.model('Movie', moviesSchema);
+let User = mongoose.model('User', usersSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
