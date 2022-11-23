@@ -19,11 +19,9 @@ app.use(morgan('common'));
 app.use(bodyParser.urlencoded({
     extended:true
 }));
-// let auth = require('./auth')(app);
-// const passport = require ('passport');
-// require('./passport');
-
-// log request to server
+let auth = require('./auth')(app);
+const passport = require ('passport');
+require('./passport');
 
 
 // get requests- default text response
@@ -37,7 +35,7 @@ app.get('/documentation', (req, res) => {
 });
 
 // return JSON object when at /movies
-app.get("/movies", /* passport.authenticate('jwt', {session: false}), */
+app.get("/movies", passport.authenticate('jwt', {session: false}), 
 (req, res) => {
     Movies.find()
     .then((movies) => {
@@ -50,7 +48,8 @@ app.get("/movies", /* passport.authenticate('jwt', {session: false}), */
   });
 
 // get JSON movie info when looking for specific title
-app.get("/movies/:title", (req, res) => {
+app.get("/movies/:title",  passport.authenticate('jwt', {session: false}), 
+(req, res) => {
   Movies.findOne({Title:  req.params.title})
     .then((movie) => {
       res.json(movie);
@@ -62,7 +61,8 @@ app.get("/movies/:title", (req, res) => {
 });
 
 // genre JSON genre info when looking for specific genre
-app.get("/movies/genre/:name", (req, res) => {
+app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}), 
+(req, res) => {
   Movies.findOne({"Genre.Name": req.params.name}) 
     .then((movies) => {
       res.json(movies.Genre);
@@ -86,7 +86,8 @@ app.get("/movies/genre/:name", (req, res) => {
 //   });
   
 // get info on Director when looking for specific Director
-app.get("/movies/director/:name/", (req, res) => {
+app.get("/movies/director/:name/",  passport.authenticate('jwt', {session: false}), 
+(req, res) => {
   Movies.findOne({"Director.Name": req.params.name }) 
     .then((movies) => {
       res.json(movies.Director);
@@ -99,7 +100,8 @@ app.get("/movies/director/:name/", (req, res) => {
 
 
 //  GET-all users
-app.get("/users", (req,res) => {
+app.get("/users",  passport.authenticate('jwt', {session: false}), 
+(req,res) => {
     Users.find().then((users) => {
         res.status(201).json(users);
     })
@@ -110,7 +112,8 @@ app.get("/users", (req,res) => {
 }); 
 
 // --GET one user
-app.get("/user/:Username", (req,res) => {
+app.get("/user/:Username",  passport.authenticate('jwt', {session: false}), 
+(req,res) => {
     Users.findOne({Username: req.params.Username })
     .then((user) => {res.json(user);
     })
@@ -120,7 +123,8 @@ app.get("/user/:Username", (req,res) => {
 });
 
 // --FindOne & Update - allow users to update their user info
-app.put("/users/:Username", (req, res) => {
+app.put("/users/:Username",  passport.authenticate('jwt', {session: false}), 
+(req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username},
     {$set:{
         Usernam: req.body.Username,
@@ -167,7 +171,8 @@ app.post("/users", (req,res) => {
 });
 
 // --POST a movie to user Favorite Movies
-app.post("/users/:Username/movies/:MovieID", (req,res) => {
+app.post("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {session: false}), 
+(req,res) => {
     Users.findOneAndUpdate({ usernam: req.params.Username}, {$push:{ FavoriteMovies: req.params.MovieID} 
     },
     {new:true}, //This line makes sure that the updated document is returned
@@ -182,7 +187,8 @@ app.post("/users/:Username/movies/:MovieID", (req,res) => {
 });
 
 // --DELETE remove a movie from Favorite Movies
-app.delete("/users/:Username/movies/:MovieID", (req,res) => {
+app.delete("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {session: false}), 
+(req,res) => {
     Users.findOneAndUpdate({ usernam: req.params.Username},
       {$pull:{ FavoriteMovies: req.params.MovieID} },
     {new:true}, //This line makes sure that the updated document is returned
@@ -197,7 +203,8 @@ app.delete("/users/:Username/movies/:MovieID", (req,res) => {
 });
 
 // --DELETE user by username- allow user to deregister
-app.delete("/users/:Username", (req,res) => {
+app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}), 
+(req,res) => {
   Users.findOneAndRemove({ Username: req.params.Username})
   .then((user) => {
     if(!user) {
