@@ -1,4 +1,4 @@
-const { models } = require('mongoose');
+// const { models } = require('mongoose');
 const passport = require('passport');
 LocalStrategy = require('passport-local').Strategy, 
 Models = require('./models.js'),
@@ -8,6 +8,7 @@ let Users = Models.User,
 JWTStrategy = passportJWT.Strategy,
 ExtractJWT = passportJWT.ExtractJWT;
 
+//Configure  and registers a local authentication strategy
 passport.use(new LocalStrategy({
     usernameField: 'Username',
     passwordField: 'Password'
@@ -26,10 +27,12 @@ passport.use(new LocalStrategy({
     return callback (null, user);
     });
 }));
+//Configures and registers a local authentication strategy
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'your_jwt_secret'
-}, (jwtPayload, callback) => {
+    secretOrKey: 'your_jwt_secret',
+}, 
+(jwtPayload, callback) => {
     return Users.findById(jwtPayload._id)
     .then((user) => {
         return callback (null, user);
