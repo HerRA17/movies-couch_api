@@ -2,9 +2,9 @@ const { models } = require('mongoose');
 const passport = require('passport');
 LocalStrategy = require('passport-local').Strategy, 
 Models = require('./models.js'),
-passportJWT = require('passportJWT');
+passportJWT = require('passport-jwt');
 
-let Users = Modals.User, 
+let Users = Models.User, 
 JWTStrategy = passportJWT.Strategy,
 ExtractJWT = passportJWT.ExtractJWT;
 
@@ -27,8 +27,8 @@ passport.use(new LocalStrategy({
     });
 }));
 passport.use(new JWTStrategy({
-    jwtFromreqest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretKey: 'your_jwt_secret'
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'your_jwt_secret'
 }, (jwtPayload, callback) => {
     return Users.findById(jwtPayload._id)
     .then((user) => {
