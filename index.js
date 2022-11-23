@@ -62,10 +62,10 @@ app.get("/movies/:title", (req, res) => {
 });
 
 // genre JSON genre info when looking for specific genre
-app.get("/movies/genre/:genre", (req, res) => {
-  Movies.findOne({"Genre.Name": req.params.name}) //Genre or Genre.Name?
-    .then((genre) => {
-      res.json(genre.Description);
+app.get("/movies/genre/:name", (req, res) => {
+  Movies.findOne({"Genre.Name": req.params.name}) 
+    .then((movies) => {
+      res.json(movies.Genre);
     }) 
     .catch((err) => {
       console.error(err);
@@ -73,11 +73,23 @@ app.get("/movies/genre/:genre", (req, res) => {
     });
   });
 
+// get  Director info 
+// app.get("/movies/director", (req, res) => {
+//   Movies.findOne({Director: req.params.Director }) 
+//     .then((director) => {
+//       res.json(director);
+//     })
+//     .catch((err) => {
+//       console.error();
+//       res.status(500).send("Error: " + err);
+//     }) 
+//   });
+  
 // get info on Director when looking for specific Director
-app.get("/movies/director/:director/", (req, res) => {
-  Movies.findOne({"Director.Name": req.params.name }) //Director or Director.Name?
-    .then((director) => {
-      res.json(director);
+app.get("/movies/director/:name/", (req, res) => {
+  Movies.findOne({"Director.Name": req.params.name }) 
+    .then((movies) => {
+      res.json(movies.Director);
     })
     .catch((err) => {
       console.error();
@@ -102,7 +114,7 @@ app.get("/user/:Username", (req,res) => {
     Users.findOne({Username: req.params.Username })
     .then((user) => {res.json(user);
     })
-    .catch((err) => { console.error(error);
+    .catch((error) => { console.error(error);
         res.status(500).send("Error: "+ error);
     });
 });
