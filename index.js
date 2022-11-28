@@ -151,18 +151,18 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
 
    // -- POST
 app.post("/users", 
- /* [
+  [
     check("Username", "Username is required").isLength({min:5}),
     check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
     check("Password", "Password is required").not().isEmpty(),
     check("Email", "Email does not appear to be valid").isEmail()
-    ], */ (req,res) => {
+    ],  (req,res) => {
     // check the validation object  for errors 
-   /*  let errors = validationResult(req);
+    let errors = validationResult(req);
     if (!errors.isEmpty()) {
     return res.status(422).json({ errors : errors.array() });
-  } */
-  // let hashedPassword = Users.hashPassword(req.body.Password);
+  } 
+  let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({Username: req.body.Username}) //search within request if User already exists
     .then((user) =>{
     if (user) {
@@ -170,7 +170,7 @@ app.post("/users",
     }  else {
         Users.create({
             Username: req.body.Username,
-            Password: req.body.Password, //instead-> hashedPassword
+            Password: hashedPassword, 
             Email: req.body.Email,
             Birthday: req.body.Birthday
         })
@@ -243,7 +243,7 @@ console.error(err.stack);
 res.status(500).send("Something broke!")
 });
 //listen for request
-//const port = process.env.Port || 8080;
-app.listen(8080, () => { //instead of 8080 -> port, '0.0.0.0.', 
-    console.log("Your app is listening to port 8080.") // "listening on port " + port
-});
+const port = process.env.Port || 8080;
+app.listen(port, '0.0.0.0.', () => {  
+    console.log("Your app is listening on Port " + Port ) 
+  });
