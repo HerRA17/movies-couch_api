@@ -1,27 +1,31 @@
 //importing express & morgan 
-const express = require('express');
-const bodyParser = require('body-parser');
-uuid = require('uuid');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-// const {Movie, User} = require('./models.js');
-const Models = require('./models.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+uuid = require("uuid");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+
+const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-mongoose.connect('mongodb://127.0.0.1:27017/movies_couch' , {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://127.0.0.1:27017/movies_couch" , {useNewUrlParser: true, useUnifiedTopology: true}); 
 const app = express();
 app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(morgan('common'));
+app.use(express.static("public"));
+app.use(morgan("common"));
 app.use(bodyParser.urlencoded({
     extended:true
 }));
-let auth = require('./auth')(app);
-const passport = require ('passport');
-require('./passport');
+
+const cors = require ("cors");
+app.use(cors());
+let auth = require("./auth")(app);
+const passport = require ("passport");
+require("./passport");
+const {check, validationResult } = require("express-validator");
 
 
 // get requests- default text response
@@ -127,7 +131,7 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
 (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username},
     {$set:{
-        Usernam: req.body.Username,
+        Username: req.body.Username,
         Password: req.body.Password,
         Email: req.body.Email,
         Birthday: req.body.Birthday
@@ -146,14 +150,27 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
 
 
    // -- POST
-app.post("/users", (req,res) => {
-    Users.findOne({Username: req.body.Username}).then((user) =>{
+app.post("/users", 
+ /* [
+    check("Username", "Username is required").isLength({min:5}),
+    check("Username", "Username contains non alphanumeric characters - not allowed").isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail()
+    ], */ (req,res) => {
+    // check the validation object  for errors 
+   /*  let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+    return res.status(422).json({ errors : errors.array() });
+  } */
+  // let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({Username: req.body.Username}) //search within request if User already exists
+    .then((user) =>{
     if (user) {
         return res.status(400).send(req.body.Username+ "already exists");
     }  else {
         Users.create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: req.body.Password, //instead-> hashedPassword
             Email: req.body.Email,
             Birthday: req.body.Birthday
         })
@@ -226,6 +243,7 @@ console.error(err.stack);
 res.status(500).send("Something broke!")
 });
 //listen for request
-app.listen(8080, () => {
-    console.log("Your app is listening to port 8080.")
+//const port = process.env.Port || 8080;
+app.listen(8080, () => { //instead of 8080 -> port, '0.0.0.0.', 
+    console.log("Your app is listening to port 8080.") // "listening on port " + port
 });
