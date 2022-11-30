@@ -1,4 +1,4 @@
-//importing express & morgan 
+//importing express & morgan  
 const express = require("express");
 const bodyParser = require("body-parser");
 uuid = require("uuid");
@@ -11,7 +11,7 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-mongoose.connect("mongodb://127.0.0.1:27017/movies_couch" , {useNewUrlParser: true, useUnifiedTopology: true}); 
+mongoose.connect("mongodb+srv://hermann17:Chispa17@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority" , {useNewUrlParser: true, useUnifiedTopology: true}); 
 const app = express();
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -78,7 +78,7 @@ app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),
   });
 
 // get  Director info 
-// app.get("/movies/director", (req, res) => {
+// app.get("/movies/:director", (req, res) => {
 //   Movies.findOne({Director: req.params.Director }) 
 //     .then((director) => {
 //       res.json(director);
