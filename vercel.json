@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@now/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(https://github.com/HerRA17/movies-couch_api)",
+        "dest": "/"
+      }
+    ]
+  }
