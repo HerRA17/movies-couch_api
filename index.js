@@ -247,3 +247,4 @@ const port = process.env.Port || 8080;
 app.listen(port, '0.0.0.0.', () => {  
     console.log("Your app is listening on Port " + Port ) 
   });
+  module.exports = app;
