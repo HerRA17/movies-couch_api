@@ -244,7 +244,14 @@ res.status(500).send("Something broke!")
 });
 //listen for request
 const port = process.env.Port || 8080;
-app.listen(port, '0.0.0.0.', () => {  
-    console.log("Your app is listening on Port " + Port ) 
+app.listen(port, '0.0.0.0', () => {  
+    console.log("Your app is listening on Port " + port ) 
   });
+  // const init = async () => {
+//   await dal.connectToDB()
+//   const port = process.env.PORT || 3000
+//   app.listen(port)
+//   console.log('Running on port: ' + port)
+// }
+// init()
   module.exports = app;
