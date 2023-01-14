@@ -11,22 +11,45 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
+// mongoose.connect(
+//  process.env.CONNECTION_URI, 
+// { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect("mongodb+srv://hermann17:Chispa17@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority" , {useNewUrlParser: true, useUnifiedTopology: true}); 
 const app = express();
-app.use(bodyParser.json());
-app.use(express.static("public"));
-app.use(morgan("common"));
-app.use(bodyParser.urlencoded({
-    extended:true
-}));
-
+app.use(bodyParser.json()); //Parse JSON bodies
+app.use(express.static("public")); //middleware for serving static files
+app.use(morgan("common")); //middleware for logging requests
+app.use(bodyParser.urlencoded({ extended:true })); //Parse URL-encoded bodies
+//Import <cors> - Middleware for controlling which domains have access
 const cors = require ("cors");
-app.use(cors());
-let auth = require("./auth")(app);
-const passport = require ("passport");
-require("./passport");
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://movies-couch-api-git-main-herra17.vercel.app/",
+  "https://movies-couch-api-herra17.vercel.app/"
+];
+// check if the domain where the request came from is allowed
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if(!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin === -1)) {
+        let message =
+        "The CORS policy for this application doesn't allow access from origin" + origin;
+        return callback(new Error(message), false); 
+      }
+      return callback(null, true);
+    },
+  })
+  );
+// import <express-validator>- Middleware for validating methods on the backend
 const {check, validationResult } = require("express-validator");
 
+// Run passport file where strategies are implemented
+const passport = require ("passport");
+require("./passport");
+let auth = require("./auth")(app);
 
 // get requests- default text response
 app.get("/", (req, res) => {
@@ -67,12 +90,14 @@ app.get("/movies/:title",  passport.authenticate('jwt', {session: false}),
 // genre JSON genre info when looking for specific genre
 app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}), 
 (req, res) => {
+  console.log(req.params);
   Movies.findOne({"Genre.Name": req.params.name}) 
     .then((movies) => {
+      console.log(movies);
       res.json(movies.Genre);
     }) 
     .catch((error) => {
-      console.error();
+      console.error(error);
       res.status(500).send("Error: " + error);
     });
   });
@@ -97,7 +122,7 @@ app.get("/movies/director/:name/",  passport.authenticate('jwt', {session: false
       res.json(movies.Director);
     })
     .catch((error) => {
-      console.error();
+      console.error(error);
       res.status(500).send("Error: " + error);
     }); 
   });
@@ -111,7 +136,7 @@ app.get("/users",  passport.authenticate('jwt', {session: false}),
     })
     .catch((error) => {
         console.error(error);
-        res.status(500).send("Error: "+ error);
+        res.status(400).send("Error: "+ error);
     });
 }); 
 
