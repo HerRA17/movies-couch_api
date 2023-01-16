@@ -102,17 +102,6 @@ app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),
     });
   });
 
-// get  Director info 
-// app.get("/movies/:director", (req, res) => {
-//   Movies.findOne({Director: req.params.Director }) 
-//     .then((director) => {
-//       res.json(director);
-//     })
-//     .catch((err) => {
-//       console.error();
-//       res.status(500).send("Error: " + err);
-//     }) 
-//   });
   
 // get info on Director when looking for specific Director
 app.get("/movies/director/:name/",  passport.authenticate('jwt', {session: false}), 
@@ -266,7 +255,7 @@ app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}),
 //error handling
 app.use((err, req, res, next) =>{
 console.error(err.stack);
-res.status(500).send("Something broke!")
+res.status(500).send("Something broke!");
 });
 //listen for request
 const port = process.env.Port || 8080;
@@ -280,4 +269,4 @@ app.listen(port, '0.0.0.0', () => {
 //   console.log('Running on port: ' + port)
 // }
 // init()
-  module.exports = app;
+  // module.exports = app;
