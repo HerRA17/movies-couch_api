@@ -41,8 +41,7 @@ app.use(
       }
       return callback(null, true);
     },
-  })
-  );
+  }));
 // import <express-validator>- Middleware for validating methods on the backend
 const {check, validationResult } = require("express-validator");
 
