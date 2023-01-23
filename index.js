@@ -74,7 +74,7 @@ app.get("/movies", /*passport.authenticate('jwt', {session: false}), */
   });
 
 // get JSON movie info when looking for specific title
-app.get("/movies/:title",  /*passport.authenticate('jwt', {session: false}), */
+app.get("/movies/:title",  /*passport.authenticate('jwt', {session: false}), */ 
 (req, res) => {
   Movies.findOne({Title:  req.params.title})
     .then((movie) => {
@@ -87,7 +87,7 @@ app.get("/movies/:title",  /*passport.authenticate('jwt', {session: false}), */
 });
 
 // genre JSON genre info when looking for specific genre
-app.get("/movies/genre/:name",  /*passport.authenticate('jwt', {session: false}), */
+app.get("/movies/genre/:name", /*passport.authenticate('jwt', {session: false}), */
 (req, res) => {
   console.log(req.params);
   Movies.findOne({"Genre.Name": req.params.name}) 
@@ -117,7 +117,7 @@ app.get("/movies/director/:name/",  /*passport.authenticate('jwt', {session: fal
 
 
 //  GET-all users
-app.get("/users",  /*passport.authenticate('jwt', {session: false}), */
+app.get("/users",  /*passport.authenticate('jwt', {session: false}), */ 
 (req,res) => {
     Users.find().then((users) => {
         res.status(201).json(users);
@@ -202,7 +202,7 @@ app.post("/users",
 });
 
 // --POST a movie to user Favorite Movies
-app.post("/users/:Username/movies/:MovieID",  /*passport.authenticate('jwt', {session: false}), */ 
+app.post("/users/:Username/movies/:MovieID",  /*passport.authenticate('jwt', {session: false}), */
 (req,res) => {
     Users.findOneAndUpdate({ usernam: req.params.Username}, {$push:{ FavoriteMovies: req.params.MovieID} 
     },
@@ -218,7 +218,7 @@ app.post("/users/:Username/movies/:MovieID",  /*passport.authenticate('jwt', {se
 });
 
 // --DELETE remove a movie from Favorite Movies
-app.delete("/users/:Username/movies/:MovieID",  /*passport.authenticate('jwt', {session: false}), */ 
+app.delete("/users/:Username/movies/:MovieID",  /*passport.authenticate('jwt', {session: false}), */
 (req,res) => {
     Users.findOneAndUpdate({ usernam: req.params.Username},
       {$pull:{ FavoriteMovies: req.params.MovieID} },
