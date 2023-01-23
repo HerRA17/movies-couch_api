@@ -11,10 +11,10 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-// mongoose.connect(
-//  process.env.CONNECTION_URI, 
-// { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect("mongodb+srv://hermann17:Chispa17@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority" , {useNewUrlParser: true, useUnifiedTopology: true}); 
+mongoose.connect(
+ process.env.CONNECTION_URI, 
+{ useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect("mongodb+srv://hermann17:Chispa17@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority" , {useNewUrlParser: true, useUnifiedTopology: true}); 
 const app = express();
 app.use(bodyParser.json()); //Parse JSON bodies
 app.use(express.static("public")); //middleware for serving static files
