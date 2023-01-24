@@ -4,6 +4,10 @@ const bodyParser = require("body-parser");
 uuid = require("uuid");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+//importing .env
+import * as dotenv from 'dotenv' 
+dotenv.config()
+import express from 'express'
 
 const Models = require("./models.js");
 const Movies = Models.Movie;
@@ -12,7 +16,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director; 
 
 //conection mongoose to the data base
-mongoose.connect( process.env.API_URL, //or process.env.CONNECTION_URI, 
+mongoose.connect('<Hermann17>:<Chispa17>@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority', 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
