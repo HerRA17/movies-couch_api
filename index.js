@@ -5,9 +5,7 @@ uuid = require("uuid");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 //importing .env
-import * as dotenv from 'dotenv' 
-dotenv.config()
-import express from 'express'
+require.config("dotenv").config();
 
 const Models = require("./models.js");
 const Movies = Models.Movie;
