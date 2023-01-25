@@ -14,8 +14,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director; 
 
 //conection mongoose to the data base
-mongoose.connect('<Hermann17>:<Chispa17>@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority', 
-{ useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.API_URL, { useNewUrlParser: true });
 
 const app = express();
 app.use(bodyParser.json()); //Parse JSON bodies
