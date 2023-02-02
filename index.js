@@ -15,7 +15,7 @@ require("dotenv").config();
 mongoose.set("strictQuery", true);
 
 //connect to mongoose
-mongoose.connect( process.env.CONNECTION_URI, 
+mongoose.connect(`mongodb+srv://hermann17:${process.env.Password}@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority`, 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
