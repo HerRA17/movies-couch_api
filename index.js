@@ -10,6 +10,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
+require("dotenv").config();
 
 mongoose.set("strictQuery", true);
 
