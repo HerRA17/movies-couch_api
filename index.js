@@ -11,8 +11,10 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-mongoose.connect(
- process.env.CONNECTION_URI, 
+mongoose.set("strictQuery", true);
+
+//connect to mongoose
+mongoose.connect( process.env.CONNECTION_URI, 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
@@ -27,7 +29,8 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:4200",
   "https://movies-couch-api-git-main-herra17.vercel.app/",
-  "https://movies-couch-api-herra17.vercel.app/"
+  "https://movies-couch-api-herra17.vercel.app/",
+  "https://movies-couch-deqgo72g2-herra17.vercel.app/"
 ];
 // check if the domain where the request came from is allowed
 app.use(
@@ -129,7 +132,7 @@ app.get("/users",  passport.authenticate('jwt', {session: false}),
 }); 
 
 // --GET one user
-app.get("/user/:Username",  passport.authenticate('jwt', {session: false}), 
+app.get("/users/:Username",  passport.authenticate('jwt', {session: false}), 
 (req,res) => {
     Users.findOne({Username: req.params.Username })
     .then((user) => {res.json(user);
