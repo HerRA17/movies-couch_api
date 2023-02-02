@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
 });
 
 //returns the API documentation
-app.get("/movies_couch/documentation", (req, res) => {
+app.get("/documentation", (req, res) => {
     res.sendFile('public/documentation.html', {root:__dirname});
 });
 
