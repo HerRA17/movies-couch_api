@@ -12,7 +12,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director; 
 
 mongoose.set("strictQuery", true);
-mongoose.set("useunifiedTopology", true);
+mongoose.set("useUnifiedTopology", true);
 
 //connect to mongoose
 mongoose.connect( process.env.CONNECTION_URI, 
@@ -52,7 +52,7 @@ const {check, validationResult } = require("express-validator");
 // Run passport file where strategies are implemented
 const passport = require ("passport");
 require("./passport");
-let auth = require("./auth")(app);
+require("./auth")(app);
 
 // get requests- default text response
 app.get("/", (req, res) => {
