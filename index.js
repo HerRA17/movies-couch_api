@@ -12,6 +12,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director; 
 
 mongoose.set("strictQuery", true);
+mongoose.set("useunifiedTopology", true);
 
 //connect to mongoose
 mongoose.connect( process.env.CONNECTION_URI, 
