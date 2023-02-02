@@ -11,10 +11,10 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-// mongoose.connect(
-//  process.env.CONNECTION_URI, 
-// { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect("mongodb+srv://user:password@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority" , {useNewUrlParser: true, useUnifiedTopology: true}); 
+mongoose.connect(
+ process.env.CONNECTION_URI, 
+{ useNewUrlParser: true, useUnifiedTopology: true });
+
 const app = express();
 app.use(bodyParser.json()); //Parse JSON bodies
 app.use(express.static("public")); //middleware for serving static files
@@ -56,7 +56,7 @@ app.get("/", (req, res) => {
 });
 
 //returns the API documentation
-app.get('/documentation', (req, res) => {
+app.get("/movies_couch/documentation", (req, res) => {
     res.sendFile('public/documentation.html', {root:__dirname});
 });
 
@@ -204,7 +204,7 @@ app.post("/users",
 // --POST a movie to user Favorite Movies
 app.post("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {session: false}), 
 (req,res) => {
-    Users.findOneAndUpdate({ usernam: req.params.Username}, {$push:{ FavoriteMovies: req.params.MovieID} 
+    Users.findOneAndUpdate({ Username: req.params.Username}, {$push:{ FavoriteMovies: req.params.MovieID} 
     },
     {new:true}, //This line makes sure that the updated document is returned
     (error, updatedUser) => {
@@ -220,7 +220,7 @@ app.post("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {sess
 // --DELETE remove a movie from Favorite Movies
 app.delete("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {session: false}), 
 (req,res) => {
-    Users.findOneAndUpdate({ usernam: req.params.Username},
+    Users.findOneAndUpdate({ Username: req.params.Username},
       {$pull:{ FavoriteMovies: req.params.MovieID} },
     {new:true}, //This line makes sure that the updated document is returned
     (error, updatedUser) => {
@@ -261,11 +261,4 @@ const port = process.env.Port || 8080;
 app.listen(port, '0.0.0.0', () => {  
     console.log("Your app is listening on Port " + port ) 
   });
-  // const init = async () => {
-//   await dal.connectToDB()
-//   const port = process.env.PORT || 3000
-//   app.listen(port)
-//   console.log('Running on port: ' + port)
-// }
-// init()
-  // module.exports = app;
+ 
