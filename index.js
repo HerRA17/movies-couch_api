@@ -59,11 +59,6 @@ app.get("/", (req, res) => {
     res.send("Welcome to Movies-couch!");
 });
 
-//returns the API documentation
-app.get("/documentation", (req, res) => {
-    res.sendFile('public/documentation.html', {root:__dirname});
-});
-
 // return JSON object when at /movies
 app.get("/movies", passport.authenticate('jwt', {session: false}), 
 (req, res) => {
