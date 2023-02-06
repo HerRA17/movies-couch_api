@@ -30,8 +30,7 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:4200",
   "https://movies-couch-api-git-main-herra17.vercel.app/",
-  "https://movies-couch-api-herra17.vercel.app/",
-  "https://movies-couch-deqgo72g2-herra17.vercel.app/"
+  "https://movies-couch-api-herra17.vercel.app/"
 ];
 // check if the domain where the request came from is allowed
 app.use(
@@ -250,7 +249,7 @@ app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}),
   .then((user) => {
     if(!user) {
       res.status(400).send(req.params.Username + "was not found");
-    } else { res.status(200).send(req.params.Username + "was deleted!");
+    } else { res.status(200).send(req.params.Username + " was deleted!");
    }
   })
   .catch((error) => {
