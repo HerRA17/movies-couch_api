@@ -14,7 +14,7 @@ require("dotenv").config();
 
 mongoose.set("strictQuery", true);
 
-//connect to mongoose
+//connect to mongoose 
 mongoose.connect(`mongodb+srv://hermann17:${process.env.Password}@movies-couch-api.fyn8ikd.mongodb.net/?retryWrites=true&w=majority`, 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -142,10 +142,16 @@ app.get("/users/:Username",  passport.authenticate('jwt', {session: false}),
 // --FindOne & Update - allow users to update their user info
 app.put("/users/:Username",  passport.authenticate('jwt', {session: false}), 
 (req, res) => {
+  // if (req.user.Username !== req.params.Username)
+  // {
+  //   res.status(403).send("You do not have permission to access this site");
+  //   return 
+  // }
+  let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username},
     {$set:{
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
     }
@@ -235,6 +241,11 @@ app.delete("/users/:Username/movies/:MovieID",  passport.authenticate('jwt', {se
 // --DELETE user by username- allow user to deregister
 app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}), 
 (req,res) => {
+  if (req.user.Username !== req.params.Username)
+  {
+    res.status(403).send("You do not have permission to access this site");
+    return 
+  }
   Users.findOneAndRemove({ Username: req.params.Username})
   .then((user) => {
     if(!user) {
@@ -261,3 +272,4 @@ app.listen(port, '0.0.0.0', () => {
     console.log("Your app is listening on Port " + port ) 
   });
  
+  //Fair use, https://en.wikipedia.org/w/index.php?curid=7037314
