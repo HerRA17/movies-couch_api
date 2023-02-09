@@ -143,7 +143,7 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
 (req, res) => {
   if (req.user.Username !== req.params.Username)
   {
-    res.status(403).send("You do not have permission to access this site"),
+    res.status(403).send("You do not have permission to access this site");
     return 
   }
   
