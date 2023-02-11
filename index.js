@@ -8,8 +8,7 @@ const mongoose = require("mongoose");
 const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director; 
+
 require("dotenv").config();
 
 mongoose.set("strictQuery", true);
@@ -86,7 +85,7 @@ app.get("/movies/:title",   passport.authenticate('jwt', {session: false}),
 });
 
 // genre JSON genre info when looking for specific genre
-app.get("/movies/genre/:name",   passport.authenticate('jwt', {session: false}),  
+app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),  
 (req, res) => {
   console.log(req.params);
   Movies.findOne({"Genre.Name": req.params.name}) 
@@ -262,7 +261,7 @@ app.delete("/users/:Username",   passport.authenticate('jwt', {session: false}),
 
 
 //error handling
-app.use((err, req, res, next) =>{
+app.use((err, req, res) =>{
 console.error(err.stack);
 res.status(500).send("Something broke!");
 });
