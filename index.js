@@ -155,7 +155,7 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
         Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
-    }
+      }
     },
     { new:true }, //This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -167,7 +167,6 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
         }
     });
 }); 
-
 
    // -- POST
 app.post("/users", 
