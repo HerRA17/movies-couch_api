@@ -114,17 +114,17 @@ app.get("/movies/director/:name/",   passport.authenticate('jwt', {session: fals
   });
 
 
-//  GET-all users
-app.get("/users",   passport.authenticate('jwt', {session: false}), 
-(req,res) => {
-    Users.find().then((users) => {
-        res.status(201).json(users);
-    })
-    .catch((error) => {
-        console.error(error);
-        res.status(404).send("Error: "+ error);
-    });
-}); 
+//  GET-all users (for development use)
+// app.get("/users",   passport.authenticate('jwt', {session: false}), 
+// (req,res) => {
+//     Users.find().then((users) => {
+//         res.status(201).json(users);
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//         res.status(404).send("Error: "+ error);
+//     });
+// }); 
 
 // --GET one user
 app.get("/users/:Username",   passport.authenticate('jwt', {session: false}),  
