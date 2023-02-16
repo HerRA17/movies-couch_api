@@ -139,7 +139,7 @@ app.get("/users/:Username",   //passport.authenticate('jwt', {session: false}),
 });
 
 // --FindOne & Update - allow users to update their user info
-app.put("/users/:Username",  passport.authenticate('jwt', {session: false}), 
+app.put("/users/:Username",  //passport.authenticate('jwt', {session: false}), 
 (req, res) => {
   if (req.user.Username !== req.params.Username)
   {
