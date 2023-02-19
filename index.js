@@ -50,9 +50,9 @@ app.use(cors());// dev-test
 const {check, validationResult } = require("express-validator");
 
 // Run passport file where strategies are implemented
-const passport = require ("passport");
-require("./passport");
-require("./auth")(app);
+// const passport = require ("passport");
+// require("./passport");
+// require("./auth")(app);
 
 // get requests- default text response
 app.get("/", (req, res) => {
