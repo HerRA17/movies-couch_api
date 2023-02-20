@@ -24,28 +24,28 @@ app.use(morgan("common")); //middleware for logging requests
 app.use(bodyParser.urlencoded({ extended:true })); //Parse URL-encoded bodies
 //Import <cors> - Middleware for controlling which domains have access
 const cors = require ("cors");
-// let allowedOrigins = [
-//   "http://localhost:8080",
-//   "http://localhost:1234",
-//   "http://localhost:4200",
-//   "https://movies-couch-api-git-main-herra17.vercel.app/",
-//   "https://movies-couch-api-herra17.vercel.app/",
-//   "https://movies-couch-api.vercel.app/movies"
-// ];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://movies-couch-api-git-main-herra17.vercel.app/",
+  "https://movies-couch-api-herra17.vercel.app/",
+  "https://movies-couch-api.vercel.app/movies"
+];
 // check if the domain where the request came from is allowed
-app.use(cors());// dev-test
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if(!origin) return callback(null, true);
-//       if (allowedOrigins.indexOf(origin) === -1)) {
-//         let message =
-//         "The CORS policy for this application doesn't allow access from origin" + origin;
-//         return callback(new Error(message), false); 
-//       }
-//       return callback(null, true);
-//     },
-//   }));
+// app.use(cors());// dev-test
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if(!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1)) {
+        let message =
+        "The CORS policy for this application doesn't allow access from origin" + origin;
+        return callback(new Error(message), false); 
+      }
+      return callback(null, true);
+    },
+  }));
 // import <express-validator>- Middleware for validating methods on the backend
 const {check, validationResult } = require("express-validator");
 
