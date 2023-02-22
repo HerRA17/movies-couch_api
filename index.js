@@ -33,26 +33,26 @@ let allowedOrigins = [
   "https://movies-couch-api.vercel.app/movies"
 ];
 // check if the domain where the request came from is allowed
-// app.use(cors());// dev-test
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if(!origin) return callback(null, true);
-      (allowedOrigins.indexOf(origin) === -1)) {
-        let message =
-        "The CORS policy for this application doesn't allow access from origin" + origin;
-        return callback(new Error(message), false); 
-      }
-      return callback(null, true);
-    },
-  }));
+app.use(cors());// dev-test
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if(!origin) return callback(null, true);
+//       if(allowedOrigins.indexOf(origin) === -1)) {
+//         let message =
+//         "The CORS policy for this application doesn't allow access from origin" + origin;
+//         return callback(new Error(message), false); 
+//       }
+//       return callback(null, true);
+//     },
+//   }));
 // import <express-validator>- Middleware for validating methods on the backend
 const {check, validationResult } = require("express-validator");
 
 // Run passport file where strategies are implemented
-const passport = require ("passport");
-require("./passport");
-require("./auth")(app);
+// const passport = require ("passport");
+// require("./passport");
+// require("./auth")(app);
 
 // get requests- default text response
 app.get("/", (req, res) => {
@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
 });
 
 // return JSON object when at /movies
-app.get("/movies",  passport.authenticate('jwt', {session: false}), 
+app.get("/movies",  //passport.authenticate('jwt', {session: false}), 
 (req, res) => {
     Movies.find()
     .then((movies) => {
@@ -73,7 +73,7 @@ app.get("/movies",  passport.authenticate('jwt', {session: false}),
   });
 
 // get JSON movie info when looking for specific title
-app.get("/movies/:title",   passport.authenticate('jwt', {session: false}),  
+app.get("/movies/:title",   //passport.authenticate('jwt', {session: false}),  
 (req, res) => {
   Movies.findOne({Title:  req.params.title})
     .then((movie) => {
@@ -86,7 +86,7 @@ app.get("/movies/:title",   passport.authenticate('jwt', {session: false}),
 });
 
 // genre JSON genre info when looking for specific genre
-app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),  
+app.get("/movies/genre/:name",  //passport.authenticate('jwt', {session: false}),  
 (req, res) => {
   console.log(req.params);
   Movies.findOne({"Genre.Name": req.params.name}) 
@@ -102,7 +102,7 @@ app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),
 
   
 // get info on Director when looking for specific Director
-app.get("/movies/director/:name/",  passport.authenticate('jwt', {session: false}),  
+app.get("/movies/director/:name/",  //passport.authenticate('jwt', {session: false}),  
 (req, res) => {
   Movies.findOne({"Director.Name": req.params.name }) 
     .then((movies) => {
@@ -115,7 +115,7 @@ app.get("/movies/director/:name/",  passport.authenticate('jwt', {session: false
   });
 
 // --GET one user
-app.get("/users/:Username",   passport.authenticate('jwt', {session: false}),  
+app.get("/users/:Username",   //passport.authenticate('jwt', {session: false}),  
 (req,res) => {
     Users.findOne({Username: req.params.Username })
     .then((user) => {res.json(user);
@@ -127,7 +127,7 @@ app.get("/users/:Username",   passport.authenticate('jwt', {session: false}),
 });
 
 // --FindOne & Update - allow users to update their user info
-app.put("/users/:Username",  passport.authenticate('jwt', {session: false}), 
+app.put("/users/:Username",  //passport.authenticate('jwt', {session: false}), 
 (req, res) => {
   if (req.user.Username !== req.params.Username)
   {
@@ -194,7 +194,7 @@ app.post("/users",
 });
 
 // --POST a movie to user Favorite Movies
-app.post("/users/:Username/movies/:MovieID",   passport.authenticate('jwt', {session: false}), 
+app.post("/users/:Username/movies/:MovieID",   //passport.authenticate('jwt', {session: false}), 
 (req,res) => {
     Users.findOneAndUpdate({ Username: req.params.Username}, {$push:{ FavoriteMovies: req.params.MovieID} 
     },
@@ -210,7 +210,7 @@ app.post("/users/:Username/movies/:MovieID",   passport.authenticate('jwt', {ses
 });
 
 // --DELETE remove a movie from Favorite Movies
-app.delete("/users/:Username/movies/:MovieID",   passport.authenticate('jwt', {session: false}),  
+app.delete("/users/:Username/movies/:MovieID",   //passport.authenticate('jwt', {session: false}),  
 (req,res) => {
     Users.findOneAndUpdate({ Username: req.params.Username},
       {$pull:{ FavoriteMovies: req.params.MovieID} },
@@ -226,7 +226,7 @@ app.delete("/users/:Username/movies/:MovieID",   passport.authenticate('jwt', {s
 });
 
 // --DELETE user by username- allow user to deregister
-app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}), 
+app.delete("/users/:Username",  //passport.authenticate('jwt', {session: false}), 
 (req,res) => {
   if (req.user.Username !== req.params.Username)
   {
