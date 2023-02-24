@@ -1,4 +1,4 @@
 # Movies-couch_api Server Side
 The Server component of a "movies" web application. The web application will provide users with access to information about different movies, directors, and genres.
 Users will be able to sign up, update their personal information, and create a list of their favorite movies. 
-For more information read the [Documentation](/public/documentation.html).
+For more information read the Documentation /*[Documentation](/public/documentation.html)*/.
