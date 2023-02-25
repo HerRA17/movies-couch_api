@@ -24,13 +24,13 @@ app.use(morgan("common")); //middleware for logging requests
 app.use(bodyParser.urlencoded({ extended:true })); //Parse URL-encoded bodies
 //Import <cors> - Middleware for controlling which domains have access
 const cors = require ("cors");
-// let allowedOrigins = [
-//   "http://localhost:8080",
-//   "http://localhost:1234",
-//   "http://localhost:4200",
-//   "https://movies-couch-api-herra17.vercel.app/movies",
-//   "https://movies-couch-api.vercel.app/movies"
-// ];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://movies-couch-api-herra17.vercel.app/movies",
+  "https://movies-couch-api.vercel.app/movies"
+];
 // check if the domain where the request came from is allowed
 app.use(cors());// dev-test
 // app.use(cors({
