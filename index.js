@@ -24,13 +24,23 @@ app.use(morgan("common")); //middleware for logging requests
 app.use(bodyParser.urlencoded({ extended:true })); //Parse URL-encoded bodies
 //Import <cors> - Middleware for controlling which domains have access
 const cors = require ("cors");
-// let allowedOrigins = [
-//   "http://localhost:8080",
-//   "http://localhost:1234",
-//   "http://localhost:4200",
-//   "https://movies-couch-api-herra17.vercel.app/movies",
-//   "https://movies-couch-api.vercel.app/movies"
-// ];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://movies-couch-api-herra17.vercel.app/movies",
+  "https://movies-couch-api.vercel.app/movies",
+   "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/LOTR-fellowship.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/two-towers.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/LOTR-return.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/Star_Wars_Phantom_Menace.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/Star_Wars_-_Episode_II_Attack_of_the_Clones.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/revenge-sith.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/new-hope.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/star-wars-episode-v-the-empire-strikes-back-i90219.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/return-jedi.jpg",
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/avengers_infinity_war.jpg"
+];
 // check if the domain where the request came from is allowed
 app.use(cors());// dev-test
 // app.use(cors({
