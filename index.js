@@ -39,8 +39,7 @@ let allowedOrigins = [
     "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/new-hope.jpg",
     "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/star-wars-episode-v-the-empire-strikes-back-i90219.jpg",
     "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/return-jedi.jpg",
-    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/avengers_infinity_war.jpg",
-    "https://codesandbox.io/s/inspiring-mopsa-rm60u8?file=/src/components/main-view/main-v.jsx"
+    "https://github.com/HerRA17/movies-couch_client/blob/main/dist/images/avengers_infinity_war.jpg"
 ];
 // check if the domain where the request came from is allowed
 // app.use(cors());// dev-test
