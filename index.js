@@ -66,7 +66,7 @@ app.get("/movies",  passport.authenticate('jwt', {session: false}),
     })
     .catch((error) => {
       console.error();
-      res.status(404).send("Error: Page not found" + error);
+      res.status(404).send("404 Page not found " + error);
     });
   });
 
@@ -79,7 +79,7 @@ app.get("/movies/:title",   passport.authenticate('jwt', {session: false}),
     })
     .catch((error) => {
       console.error();
-      res.status(404).send("Error: Page not found" + error);
+      res.status(404).send("404 Page not found " + error);
     });
 });
 
@@ -94,7 +94,7 @@ app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),
     }) 
     .catch((error) => {
       console.error(error);
-      res.status(404).send("Error: Page not found" + error);
+      res.status(404).send("Page not found " + error);
     });
   });
 
@@ -108,7 +108,7 @@ app.get("/movies/director/:name/", passport.authenticate('jwt', {session: false}
     })
     .catch((error) => {
       console.error(error);
-      res.status(404).send("Error: Page not found" + error);
+      res.status(404).send("Page not found " + error);
     }); 
   });
 
@@ -120,7 +120,7 @@ app.get("/users/:Username",  passport.authenticate('jwt', {session: false}),
     })
     .catch((error) => { 
       console.error(error);
-      res.status(404).send("Error: Page not found"+ error);
+      res.status(404).send("Page not found"+ error);
     });
 });
 
@@ -181,7 +181,7 @@ app.post("/users",
         .then((user) => {res.status(201).json(user) })
         .catch((error) => {
             console.error(error);
-            res.status(404).send("Error: Page not found"+ error);
+            res.status(404).send("User not found"+ error);
             })
         }  
     })
