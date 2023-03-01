@@ -19,7 +19,7 @@ module.exports = (router) => {
             (error, user, info) => {
 if (error || !user) {
     return res.status(400).json({
-        message: 'no user found',
+        message: 'no user found under those credentials',
         user: user
     });
 }
