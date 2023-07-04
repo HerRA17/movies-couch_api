@@ -30,6 +30,7 @@ let allowedOrigins = [
   "http://localhost:4200",
   "https://movies-couch-api-herra17.vercel.app/movies",
   "https://movies-couch-api.vercel.app/movies",
+  "https://movies-couch.netlify.app"  
    ];
 // check if the domain where the request came from is allowed
 // app.use(cors());// dev-test
@@ -94,7 +95,7 @@ app.get("/movies/genre/:name",  passport.authenticate('jwt', {session: false}),
     }) 
     .catch((error) => {
       console.error(error);
-      res.status(404).send("Page not found " + error);
+      res.status(404).send("404 Page not found " + error);
     });
   });
 
@@ -108,7 +109,7 @@ app.get("/movies/director/:name/", passport.authenticate('jwt', {session: false}
     })
     .catch((error) => {
       console.error(error);
-      res.status(404).send("Page not found " + error);
+      res.status(404).send("404 Page not found " + error);
     }); 
   });
 
@@ -120,7 +121,7 @@ app.get("/users/:Username",  passport.authenticate('jwt', {session: false}),
     })
     .catch((error) => { 
       console.error(error);
-      res.status(404).send("Page not found"+ error);
+      res.status(404).send("404 Page not found "+ error);
     });
 });
 
@@ -146,7 +147,7 @@ app.put("/users/:Username",  passport.authenticate('jwt', {session: false}),
     (err, updatedUser) => {
         if(err) {
             console.error(err);
-            res.status(404).send("Error: Page not found"+ err);
+            res.status(404).send("404 Page not found "+ err);
         } else {
             res.json(updatedUser);
         }
@@ -203,6 +204,7 @@ app.post("/users/:Username/favMovies/:MovieID",  passport.authenticate('jwt', {s
             res.status(404).send("Error: Page not found"+ error);
         } else {
             res.json(updatedUser)
+            res.status(200).send(req.params.Username + "movie was added to Favorite Movies!");
         }
     });
 });
@@ -219,6 +221,7 @@ app.delete("/users/:Username/favMovies/:MovieID",  passport.authenticate('jwt', 
             res.status(404).send("Error: Page not found"+ error);
         } else {
             res.json(updatedUser)
+            res.status(200).send(req.params.Username + "movie was removed from Favorite Movies!");
         }
     });
 });
