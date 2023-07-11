@@ -220,7 +220,6 @@ app.delete("/users/:Username/favMovies/:MovieID",  passport.authenticate('jwt', 
             res.status(404).send("Error: Page not found"+ error);
         } else {
             res.json(updatedUser)
-            res.status(200).send(req.params.Username + "movie was removed from Favorite Movies!");
         }
     });
 });
