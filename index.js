@@ -204,7 +204,6 @@ app.post("/users/:Username/favMovies/:MovieID",  passport.authenticate('jwt', {s
             res.status(404).send("Error: Page not found"+ error);
         } else {
             res.json(updatedUser)
-            res.status(200).send(req.params.Username + "movie was added to Favorite Movies!");
         }
     });
 });
