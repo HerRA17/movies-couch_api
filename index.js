@@ -249,10 +249,10 @@ app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}),
 
 
 //error handling
-app.use((err, req, res) =>{
-console.error(err.stack);
-res.status(500).send("Something broke!");
-});
+// app.use((err, req, res) =>{
+// console.error(err.stack);
+// res.status(500).send("Something broke!");
+// });
 //listen for request
 const port = process.env.Port || 8080;
 app.listen(port, '0.0.0.0', () => {  
