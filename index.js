@@ -31,7 +31,7 @@ let allowedOrigins = [
   "https://movies-couch-api-herra17.vercel.app/movies",
   "https://movies-couch-api.vercel.app/movies",
   "https://movies-couch.netlify.app",
-  "https://moviescouchangular.netlify.app"  
+  "https://movies-couch-angular-client.vercel.app/"  
    ];
 // check if the domain where the request came from is allowed
 // app.use(cors());// dev-test
