@@ -183,14 +183,18 @@ app.post("/users",
         .then((user) => {res.status(201).json(user) })
         .catch((error) => {
             console.error(error);
-            res.status(404).send("User not found"+ error);
+            res.status(401).send("You do not have authorization to proceed"+ error);
             })
         }  
-    })
-    .catch((error) => {
-      console.error(error);
-            res.status(404).send("Error: Page not found"+ error);
-    })
+        })
+        .catch((error) => {
+          console.error(error);
+                res.status(400).send("Error: Username is a duplicate, please try something else" + error);
+        })
+        .catch((error) => {
+          console.error(error);
+                res.status(404).send("Error: Page not found" + error);
+        })
 });
 
 // --POST a movie to user Favorite Movies
