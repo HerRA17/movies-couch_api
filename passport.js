@@ -7,7 +7,7 @@ let Users = Models.User,
 JWTStrategy = passportJWT.Strategy,
 ExtractJWT = passportJWT.ExtractJwt;
 
-//Configure  and registers a local authentication strategy
+//Configures and registers a local authentication strategy
 passport.use(new LocalStrategy({
     usernameField: 'Username',
     passwordField: 'Password'

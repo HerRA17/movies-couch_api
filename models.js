@@ -35,5 +35,3 @@ let User = mongoose.model('users', UsersSchema);
 
 module.exports.Movie = Movie;
 module.exports.User = User;
-
-

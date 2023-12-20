@@ -34,7 +34,6 @@ let allowedOrigins = [
   "https://movies-couch-angular-client.vercel.app/"  
    ];
 // check if the domain where the request came from is allowed
-// app.use(cors());// dev-test
 app.use(cors({
     origin: (origin, callback) => {
       if(!origin) return callback(null, true);
@@ -60,7 +59,7 @@ app.get("/", (req, res) => {
 });
 
 // return JSON object when at /movies
-app.get("/movies",  passport.authenticate('jwt', {session: false}), 
+app.get("/movies", passport.authenticate('jwt', {session: false}), 
 (req, res) => {
     Movies.find()
     .then((movies) => {
@@ -73,7 +72,7 @@ app.get("/movies",  passport.authenticate('jwt', {session: false}),
   });
 
 // get JSON movie info when looking for specific title
-app.get("/movies/:title",   passport.authenticate('jwt', {session: false}),  
+app.get("/movies/:title", passport.authenticate('jwt', {session: false}),  
 (req, res) => {
   Movies.findOne({Title:  req.params.title})
     .then((movie) => {
@@ -182,18 +181,19 @@ app.post("/users",
         })
         .then((user) => {res.status(201).json(user) })
         .catch((error) => {
+          console.error(error);
+                res.status(400).send("Error: Username is a duplicate, please try something else" + error);
+                // inspect the error + 1 catch block
+        })
+        .catch((error) => {
             console.error(error);
-            res.status(401).send("You do not have authorization to proceed"+ error);
+            res.status(401).send("You do not have authorization to  "+ error);
             })
         }  
         })
         .catch((error) => {
           console.error(error);
-                res.status(400).send("Error: Username is a duplicate, please try something else" + error);
-        })
-        .catch((error) => {
-          console.error(error);
-                res.status(404).send("Error: Page not found" + error);
+                res.status(404).send("Error: Page not found " + error);
         })
 });
 
@@ -250,13 +250,6 @@ app.delete("/users/:Username",  passport.authenticate('jwt', {session: false}),
   });
 });
 
-
-
-//error handling
-// app.use((err, req, res) =>{
-// console.error(err.stack);
-// res.status(500).send("Something broke!");
-// });
 //listen for request
 const port = process.env.Port || 8080;
 app.listen(port, '0.0.0.0', () => {  
